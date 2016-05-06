@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<!-- jQuery, jQuery.ui -->
+    <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <title>Tutor Queue</title>
+</head>
+
+<body ng-app="tutorApp">
+  <main>
+    <section id="option" ng-controller="optionsController as optionctrl" ng-init="optionctrl.getOptions()">
+        <h1 ng-model="option.message">{{optionctrl.message}}</h1>
+        <label>Subject:
+            <select ng-model="option.mysubject" ng-options="subject.name for subject in optionctrl.subjects" ></select>
+          </label>
+        <label>Table:
+            <select ng-model="option.mytable" ng-options="table.name for table in optionctrl.tables" ></select>
+          </label>
+            <input  ng-hide="inQ" type="button" value="Help!" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="optionctrl.createSession(option);inQ = !inQ"/>
+            <input  ng-show="inQ" type="button" value="Delete" class="btn btn-danger  btn-sm glyphicon glyphicon-trash" ng-click="optionctrl.deleteSession(optionctrl.currSessionID);inQ = !inQ"/>
+
+    </section>
+  </main>
+
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="./bundle.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.2.7/angular-local-storage.min.js"></script> 
+    <script type="text/javascript" src="./js/socket.io.js"></script>
+
+    <script>
+      var socket = io();
+      socket.on('bark', function(data){
+          console.log(data);
+        });
+      // socket.on('DeletedSession', function(ID){
+      //     var el = document.querySelector('#option'),
+      //       $el = angular.element(el),
+      //       $scope = $el.scope();
+      //     $scope.amIDeleted(ID);
+      //   });
+
+    </script>
+
+</body>
+</html>

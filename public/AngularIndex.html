@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<!-- jQuery, jQuery.ui -->
+    <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<title>Angular Crud for Two Resource API</title>
+</head>
+
+<body ng-app="cruddyApp">
+	<main>
+		<section id="users" ng-controller="userController as userctrl" ng-init="userctrl.getUsers()">
+		<h1>{{userctrl.header}}</h1>
+		<ul>
+
+
+			<li ng-repeat="user in userctrl.users">{{user.name}} - {{user.sid}}
+            <input class="button user-edit" type="button" value="Edit" ng-click="userctrl.backupUser(user);edit = !edit"/>
+            <form name="userForm" ng-init="!edit" ng-show="edit" action="">
+                <label for="userName"><input id="userName" class="input" ng-model="user.name"> User Name</label><br/>
+                <label for="userSID"><input id="userSID" class="input" ng-model="user.sid"> SID</label><br/>    
+                <label for="userPassword"><input id="userPassword" class="input" ng-model="user.password"> Password</label><br/>    
+	              <div>
+	        		<input  type="button" value="Cancel" class="btn btn-warning btn-sm glyphicon glyphicon-erase" ng-click="userctrl.cancelUser(user)"/>
+	        		<input  type="button" value="Save" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="userctrl.updateUser(user);edit = !edit"/>
+	        		<input  type="button" value="Create" class="btn btn-primary btn-sm glyphicon glyphicon-plus" ng-click="userctrl.createUser(user);edit = !edit"/>
+	        		<input  type="button" value="Delete" class="btn btn-danger  btn-sm glyphicon glyphicon-trash" ng-click="userctrl.deleteUser(user);edit = !edit"/>
+	        	  </div>
+            </form>
+			</li>
+		</ul>
+		</section>
+
+		<section id="courses" ng-controller="courseController as coursectrl" ng-init="coursectrl.getCourses()">
+		<h1>{{coursectrl.header}}</h1>
+		<ul>
+
+
+			<li ng-repeat="course in coursectrl.courses">{{course.dept}} {{course.number}} - {{course.enrollment}} / {{course.maxEnroll}}
+            <input class="button course-edit" type="button" value="Edit" ng-click="coursectrl.backupCourse(course);edit = !edit"/>
+            <form name="courseForm" ng-init="!edit" ng-show="edit" action="">
+                <label for="courseDept"><input id="courseDept" class="input" ng-model="course.dept"> Course Dept</label><br/>
+                <label for="courseNumber"><input id="courseNumber" class="input" ng-model="course.number"> Number</label><br/>    
+                <label for="courseEnrollment"><input id="courseEnrollment" class="input" ng-model="course.enrollment"> Enrollment</label><br/>    
+                <label for="courseMaxEnroll"><input id="courseMaxEnroll" class="input" ng-model="course.maxEnroll"> Max Enrollment</label><br/>    
+	              <div>
+	        		<input  type="button" value="Cancel" class="btn btn-warning btn-sm glyphicon glyphicon-erase" ng-click="coursectrl.cancelCourse(course)"/>
+	        		<input  type="button" value="Save" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="coursectrl.updateCourse(course);edit = !edit"/>
+	        		<input  type="button" value="Create" class="btn btn-primary btn-sm glyphicon glyphicon-plus" ng-click="coursectrl.createCourse(course);edit = !edit"/>
+	        		<input  type="button" value="Delete" class="btn btn-danger  btn-sm glyphicon glyphicon-trash" ng-click="coursectrl.deleteCourse(course);edit = !edit"/>
+	        	  </div>
+            </form>
+			</li>
+		</ul>
+		</section>
+	</main>
+
+    <script src="./bundle.js"></script>
+</body>
+</html>

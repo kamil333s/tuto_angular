@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<head>
+
+<!-- jQuery, jQuery.ui -->
+    <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<meta http-equiv="Content-Language" content="en">
+<style media="screen">
+  nav li { display: inline; }
+</style>
+</head>
+<body ng-app="tutorApp">
+  <main>
+    <nav>
+      <li><a href="index.html">Request Help</a></li>
+      <li><a href="display.html">Queue</a></li>
+      <li><a href="admin.html">Admin</a></li>
+      <li><a href="login.html">Login</a></li>
+    </nav>
+  <section id="displayQ">
+    <section id="Queue" ng-controller="sessionsController as sessionctrl" ng-init="sessionctrl.getSessions()">
+      <h3 id="message">
+        
+      </h3>
+      <div class="col-md-6">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <td colspan=5>Tutor Queue</td>
+              </tr>
+              <tr>
+                <th>#</th>
+                <th>Subject</th>
+                <th>Table</th>
+                <th>Time</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="session in sessionctrl.sessions">
+                <td>{{$index + 1}}
+                <td>{{session.subject}}</td>
+                <td>{{session.table}}</td>
+                <td>{{session.timeIn}}</td>
+                <td><input  type="button" value="Remove" class="btn btn-danger btn-sm glyphicon glyphicon-floppy-disk" ng-click="sessionctrl.deleteSession(session._id)"/> </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </table>
+  </section>
+    
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <script type="text/javascript" src="./js/display.js"></script>
+    <script type="text/javascript" src="./js/socket.io.js"></script>
+
+    <script src="./bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.2.7/angular-local-storage.min.js"></script>
+    <script>
+      var socket = io();
+      
+      socket.on('UpdateQ', function(msg){
+        location.reload();
+      });
+      socket.on('newMessage', function(msg){
+        $("#message").text(msg);
+      });
+    </script>
+</body>
+</html>

@@ -1,1 +1,1 @@
-# tuto_angular
+# tutor_project

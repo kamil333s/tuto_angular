@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- jQuery, jQuery.ui -->
+    <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+
+
+    <meta charset="utf-8">
+     <title>Tutor Queue- Admin</title>
+    <style media="screen">
+      nav li { display: inline; }
+    </style>
+  </head>
+  <body ng-app="tutorApp">
+    <nav>
+      <li><a href="index.html">Request Help</a></li>
+      <li><a href="display.html">Queue</a></li>
+      <li><a href="admin.html">Admin</a></li>
+      <li><a href="login.html">Login</a></li>
+    </nav>
+    <div id='login' ng-controller="loginController as loginctrl" >
+      
+      <div ng-show="!loginctrl.loggedBool">
+        
+        <input  ng-show="loginctrl.loggedBool" type="button" value="Login" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="showLogin=!showLogin"/>
+        <h1>Login</h1>
+        <input type="text" ng-model="loginctrl.username" id="userName" placeholder="Enter username...">
+        <input type="text" ng-model="loginctrl.password" id="userPassword" placeholder="Enter password...">
+        <input  type="button" value="Login" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="loginctrl.login()"/>
+      </div>
+
+    <main id="admin" ng-show="loginctrl.loggedBool">
+    <div ng-controller="optionsController as optionctrl" ng-init="optionctrl.getOptions()">
+      <input   type="button" value="Logout" class="btn btn-danger btn-sm glyphicon glyphicon-floppy-disk" ng-click="loginctrl.logout()"/> 
+
+      <section  id="subjects" >
+        <h2>
+            <input  type="button" value="Edit" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="SubjectEdit = !SubjectEdit"/> Subjects
+        </h2>
+        <div ng-show="SubjectEdit">
+          <ul>
+            <li ng-repeat="subject in optionctrl.subjects">
+              {{subject.name}}
+            </li>
+          </ul>
+        </div>
+        <div ng-show="SubjectEdit">          
+          <form>
+            <input type='text' ng-model='optionctrl.subjList'/> Subjects<br/>
+            <input  type="button" value="Save" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="optionctrl.createSubjects();SubjectEdit = !SubjectEdit"/>
+            
+            <input  type="button" value="Delete" class="btn btn-danger  btn-sm glyphicon glyphicon-trash" ng-click="optionctrl.deleteSubjects();SubjectEdit = !SubjectEdit"/>
+          </form>
+        </div>        
+      </section>
+
+      <section  id="tables" >
+        <h2>
+        <input  type="button" value="Edit" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="TableEdit = !TableEdit"/> Tables
+        </h2>
+        <div ng-show="TableEdit">
+          <ul>
+            <li ng-repeat="table in optionctrl.tables">
+              {{table.name}}
+            </li>
+          </ul>          
+          <form>
+            <input type='text' ng-model='optionctrl.tableList'/> Tables<br/>
+            <input  type="button" value="Save" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="optionctrl.createTables();TableEdit = !TableEdit"/>
+            <input  type="button" value="Delete" class="btn btn-danger  btn-sm glyphicon glyphicon-trash" ng-click="optionctrl.deleteTables();edit = !edit"/>
+          </form>
+        </div>
+      </section>
+      
+      <section  id="users" >
+        <h2>
+          <input  type="button" value="Edit" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="optionctrl.getUsers();UserEdit = !UserEdit"/> Users
+        </h2>
+        <!-- <input  type="button" value="Display users" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="optionctrl.getUsers();UserEdit = !UserEdit"/> -->
+        <div ng-show="UserEdit" >
+          <ul>
+            <li ng-repeat="user in optionctrl.users">
+              <input  type="button" value="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash" ng-click="optionctrl.deleteUser(user.id);$parent.UserEdit = !$parent.UserEdit"/>
+                {{user.name}}
+            </li>
+          </ul>         
+          <form>
+            <input type='text' ng-model='optionctrl.username'/> Username<br/>
+            <input type='password' ng-model='optionctrl.password'/> Password<br/>
+            <input type='checkbox' ng-model='optionctrl.admin'/> Admin<br/>
+            <input  type="button" value="Save" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="optionctrl.createUsers();UserEdit = !UserEdit"/>
+          </form>
+        </div>
+      </section>
+
+      <section id="export" ng-controller="exportController as exportctrl">
+        <h2>
+        <input  type="button" value="Edit" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="ExportEdit = !ExportEdit"/> Export
+        </h2>
+        <div ng-show="ExportEdit">
+          <h3>
+            Export tutoring sessions as CSV {{exportctrl.email}}
+          </h3>
+
+          <form>
+            <input type='text' ng-model='exportctrl.email'/> email<br/>
+            <input  type="button" value="Email" class="btn btn-danger  btn-sm glyphicon glyphicon-trash" ng-click="exportctrl.exportEmail(exportctrl.email);ExportEdit = !ExportEdit"/>
+            <input  type="button" value="Download" class="btn btn-danger  btn-sm glyphicon glyphicon-trash" ng-click="exportctrl.exportDownload();ExportEdit = !ExportEdit"/>          
+          </form>
+        </div>
+
+      </section>
+      <section>
+        
+      <br/>Enter message: <input type="text" id="inputMessage"/>
+      <button id="sendMessage">Send</button>
+      </section>
+    </main>
+    </div>
+<!-- 
+
+
+
+
+    <button id="logOut">LOGOUT</button>
+    <h1>Admin Page</h1>
+
+      <h2>Active Subjects</h2><button id="tables"> Delete current tables</button><br>
+      <button id="showSubjects">Show Subjects</button><br>
+
+      <ul id="subDiv">
+
+      </ul>
+
+
+      <h2>Active Tables</h2><button id="tables">Delete current tables</button><br>
+      <button id="showTables">Show Tables</button><br>
+      <ul id="tableDiv">
+
+      </ul>
+
+      Enter Subject: <input type="text" id="inputSubjects">
+      <button id="postSubjects">SUBMIT</button>
+      <button id="updateSubjects">UPDATE</button><br><br>
+
+      Enter Table: <input type="text" id="inputTables">
+      <button id="postTables">SUBMIT</button>
+      <button id="updateTables">UPDATE</button>
+
+      <h2>Active Users</h2>
+      <button id="showUsers">Show Users</button><br>
+      <ul id="userDiv">
+
+      </ul>
+
+      Enter Username: <input type="text" id="inputUser">
+      Enter Password: <input type="text" id="inputPassword">
+      Admin: <input type="checkbox" id="inputAdmin" value="true">
+      <button id="postUser">ADD</button>
+
+      <h1>Export Session Data as CSV file</h1>
+      Enter Email: <input type="text" id="inputEmail">
+      <button id="emailData">EMAIL</button><br>
+      <button id="downloadData">DOWNLOAD</button>
+      <button id="archiveData">ARCHIVE</button>
+
+
+      <br/>Enter message: <input type="text" id="inputMessage">
+      <button id="sendMessage">Send</button>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script type="text/javascript" src="./js/socket.io.js"></script>
+  <script>
+  $(document).ready(function(){
+    var tablesId;
+    var tablesId;
+    $('#subDiv, #tableDiv, #userDiv').hide();
+
+    $('#logOut').on('click', function(e) {
+      e.preventDefault();
+      delete localStorage.token;
+      console.log('Logged Out!');
+    })
+    $('#tables').on('click', function(e) {
+      e.preventDefault();
+      $.ajax({
+        headers: {'Authorization': localStorage.token},
+        url :'/admin/tables',
+        method : 'DELETE'
+      }).done(function(data) {
+        $('#subDiv').empty();
+      })
+    })
+
+    $('#tables').on('click', function(e) {
+      e.preventDefault();
+      $.ajax({
+        headers: {'Authorization': localStorage.token},
+        url :'/admin/tables',
+        method : 'DELETE'
+      }).done(function(data) {
+        $('#tableDiv').empty();
+      })
+    })
+    $('#showSubjects').on('click', function(e) {
+      e.preventDefault();
+      $('#subDiv').toggle();
+    })
+
+    $('#showTables').on('click', function(e) {
+      e.preventDefault();
+      $('#tableDiv').toggle();
+    })
+
+    $('#showUsers').on('click', function(e) {
+      e.preventDefault();
+      $('#userDiv').toggle();
+    })
+
+    $('#postSubjects').on('click', function(e) {
+      e.preventDefault();
+      var text = $('#inputSubjects').val().split(',');
+      console.log('Contents: '+text);
+      console.log('Token'+localStorage.token);
+      $.ajax({
+        headers: {'Authorization': localStorage.token},
+        url :'/admin/tables',
+        method : 'POST',
+        data: {tables: text}
+      }).done(function(data) {
+        console.log(data);
+        location.reload();
+      })
+    })
+
+    $('#postTables').on('click', function(e) {
+      e.preventDefault();
+      var text = $('#inputTables').val().split(',');
+      console.log('Contents: '+text);
+      $.ajax({
+        headers: {'Authorization': localStorage.token},
+        url :'/admin/tables',
+        method : 'POST',
+        data: {tables: text}
+      }).done(function(data) {
+        console.log(data);
+        location.reload();
+      })
+    })
+
+    $('#postUser').on('click', function(e) {
+      e.preventDefault();
+      var name = $('#inputUser').val().trim();
+      var password = $('#inputPassword').val().trim();
+      var admin = false;
+      if ($('#inputAdmin').prop('checked')) {
+        admin = true;
+      }
+
+      $.ajax({
+        headers: {'Authorization': localStorage.token},
+        url :'/admin/users',
+        method : 'POST',
+        data: {name:name, password:password, admin:admin}
+      }).done(function(data) {
+        console.log(data);
+        location.reload();
+      })
+    })
+
+    $('#updateSubjects').on('click', function(e) {
+      e.preventDefault();
+      var text = $('#inputSubjects').val().split(',');
+      console.log('Contents: '+text);
+      $.ajax({
+        headers: {'Authorization': localStorage.token},
+        url :'/admin/tables/'+tablesId,
+        method : 'PUT',
+        data: {tables: text}
+      }).done(function(data) {
+        console.log(data)
+        location.reload();
+      ;})
+    })
+    // TODO: filter out empty strings
+    $('#updateTables').on('click', function(e) {
+      e.preventDefault();
+      var text = $('#inputTables').val().split(',');
+      console.log('Contents: '+text);
+      $.ajax({
+        headers: {'Authorization': localStorage.token},
+        url :'/admin/tables/'+tablesId,
+        method : 'PUT',
+        data: {tables: text}
+      }).done(function(data) {
+        console.log(data);
+        location.reload();
+      })
+    })
+
+    $('#downloadData').on('click', (e) => {
+      e.preventDefault();
+      $.ajax({
+        headers: {'Authorization': localStorage.token},
+        method: 'GET',
+        url: '/admin/downloads'
+      }).done((data) => {
+        console.log(data);
+      })
+    })
+
+    $('#emailData').on('click', (e) => {
+      e.preventDefault();
+      var email = $('#inputEmail').val();
+      console.log(email);
+      $.ajax({
+        headers: {'Authorization': localStorage.token},
+        method: 'POST',
+        data: {email:email},
+        url: '/admin/email'
+      }).done((data) => {
+        console.log(data);
+      })
+    })
+
+    $('#archiveData').on('click', (e) => {
+      e.preventDefault();
+      $.ajax({
+        headers: {'Authorization': localStorage.token},
+        method: 'POST',
+        url: '/admin/archive'
+      }).done((data) => {
+        console.log(data);
+      })
+    })
+
+    $.ajax({
+      headers: {'Authorization': localStorage.token},
+      method: 'GET',
+      url: '/admin/tables'
+    }).done(function(data) {
+      data[0].tables.forEach(function(sub) {
+        $('#subDiv').append('<li>'+sub+'</li>');
+      })
+      tablesId = data[0]._id;
+    })
+
+    $.ajax({
+      headers: {'Authorization': localStorage.token},
+      method: 'GET',
+      url: '/admin/tables'
+    }).done(function(data) {
+      data[0].tables.forEach(function(tab) {
+        $('#tableDiv').append('<li>'+tab+'</li>');
+      })
+      tablesId = data[0]._id;
+    })
+
+    $.ajax({
+      headers: {'Authorization': localStorage.token},
+      method: 'GET',
+      url: '/admin/users'
+    }).done(function(data) {
+      data.forEach((obj) => {
+        $('#userDiv').append('<li>'+obj.name+'</li>')
+      })
+      console.log(data);
+    })
+
+    // Send message to clients
+    var socket = io();
+    $('#sendMessage').on('click', function(e) {
+      e.preventDefault();
+      socket.emit('newMessage', $('#inputMessage').val());
+    });
+
+  });
+  </script> -->
+
+    <script src="./bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.2.7/angular-local-storage.min.js"></script> 
+    <script type="text/javascript" src="./js/socket.io.js"></script>
+    <script>
+    // Send message to clients
+    var socket = io();
+    $('#sendMessage').on('click', function(e) {
+      console.log($('#inputMessage').val());
+      e.preventDefault();
+      socket.emit('newMessage', $('#inputMessage').val());
+    });
+
+    </script>
+  </body>
+</html>
