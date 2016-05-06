@@ -1,4 +1,5 @@
 require('angular');
+// require('socket.io');
 
 var app = angular.module('tutorApp',['LocalStorageModule']);
 var URL = 'http://localhost:3000';
@@ -228,6 +229,8 @@ app.controller('optionsController', ['$http', 'myFactory','localStorageService',
 			);// then
 	};
 
+	}
+
 	// *****************TABLES*******************
 
 
@@ -372,7 +375,6 @@ app.controller('optionsController', ['$http', 'myFactory','localStorageService',
 				}// error
 			);// then
 	};
-
 }]);// controller
 
 
@@ -380,9 +382,9 @@ app.controller('sessionsController', ['$http',function($http) {
 	var vm = this;
 	vm.header = 'Queue';
 	vm.sessions = [{
-		subject:'subjectTest4',
-		table:'table1',
-		timeIn:'time',
+		subject:'',
+		table:'',
+		timeIn:'',
 		id:''
 	}];
 	vm.mysubject = '';
@@ -481,10 +483,8 @@ app.controller('loginController', ['$http', 'myFactory', function($http, myFacto
 }]);
 
 app.controller('exportController', ['$http', 'myFactory', function($http, myFactory) {
-	console.log("export called");
 	var vm = this;
     vm.email = '';
-
 
     vm.exportEmail = function(email){
     	console.log("export called");
@@ -532,18 +532,14 @@ app.controller('exportController', ['$http', 'myFactory', function($http, myFact
 				}// error
 			);// then
 
-    }
-  	vm.logout = function(){
-		myFactory.clearToken();
-	    vm.username = '';
-	    vm.password = '';
-  		vm.loggedBool = false;
-  	}
+    };
+}]);
 
-  	vm.loggedIn = function(){
-  		vm.loggedBool= true;
-  	}
-  	vm.loggedOut = function(){
-  		vm.loggedBool = false;
-  	}
+app.controller('messageController', ['$http', 'myFactory', function($http, myFactory) {
+	var msg = this;
+    msg.test = 'test';
+
+    msg.test = function(){
+    	console.log('HERE!');
+    };
 }]);

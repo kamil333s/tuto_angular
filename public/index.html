@@ -10,18 +10,19 @@
   <title>Tutor Queue</title>
 </head>
 
-<body ng-app="tutorApp">
+<body ng-app="tutorApp" >
+  <h3 id="message"></h3>
   <main>
-    <section id="option" ng-controller="optionsController as optionctrl" ng-init="optionctrl.getOptions()">
-        <h1 ng-model="option.message">{{optionctrl.message}}</h1>
+    <section id="option" ng-controller="optionsController as optionctrl" ng-init="optionctrl.getOptions()" >
+        <h1 ng-model="option.message" >{{optionctrl.message}}</h1>
         <label>Subject:
             <select ng-model="option.mysubject" ng-options="subject.name for subject in optionctrl.subjects" ></select>
           </label>
         <label>Table:
             <select ng-model="option.mytable" ng-options="table.name for table in optionctrl.tables" ></select>
-          </label>
-            <input  ng-hide="inQ" type="button" value="Help!" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="optionctrl.createSession(option);inQ = !inQ"/>
-            <input  ng-show="inQ" type="button" value="Delete" class="btn btn-danger  btn-sm glyphicon glyphicon-trash" ng-click="optionctrl.deleteSession(optionctrl.currSessionID);inQ = !inQ"/>
+          </label> 
+            <button  ng-hide="inQ" value="Help!" class="btn btn-success btn-sm glyphicon glyphicon-send" ng-click="optionctrl.createSession(option);inQ = !inQ"/></button>
+            <button  ng-show="inQ" value="Delete" class="btn btn-danger  btn-sm glyphicon glyphicon-trash" ng-click="optionctrl.deleteSession(optionctrl.currSessionID);inQ = !inQ"/></button>
 
     </section>
   </main>
@@ -37,7 +38,8 @@
     <script>
       var socket = io();
       socket.on('bark', function(data){
-          console.log(data);
+        $("#message").text(data);
+          // console.log(data);
         });
       // socket.on('DeletedSession', function(ID){
       //     var el = document.querySelector('#option'),

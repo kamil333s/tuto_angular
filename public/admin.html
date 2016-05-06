@@ -19,30 +19,30 @@
     </style>
   </head>
   <body ng-app="tutorApp">
-    <nav>
+    <!-- <nav>
       <li><a href="index.html">Request Help</a></li>
       <li><a href="display.html">Queue</a></li>
       <li><a href="admin.html">Admin</a></li>
       <li><a href="login.html">Login</a></li>
-    </nav>
+    </nav> -->
     <div id='login' ng-controller="loginController as loginctrl" >
       
       <div ng-show="!loginctrl.loggedBool">
         
-        <input  ng-show="loginctrl.loggedBool" type="button" value="Login" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="showLogin=!showLogin"/>
+        <!-- <input  ng-show="loginctrl.loggedBool" type="button" value="Login" class="btn btn-success btn-sm glyphicon glyphicon-log-in" ng-click="showLogin=!showLogin"/> -->
         <h1>Login</h1>
         <input type="text" ng-model="loginctrl.username" id="userName" placeholder="Enter username...">
         <input type="text" ng-model="loginctrl.password" id="userPassword" placeholder="Enter password...">
-        <input  type="button" value="Login" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="loginctrl.login()"/>
+        <button value="Login" class="btn btn-success btn-sm glyphicon glyphicon-log-in" ng-click="loginctrl.login()"/></button>
       </div>
 
     <main id="admin" ng-show="loginctrl.loggedBool">
     <div ng-controller="optionsController as optionctrl" ng-init="optionctrl.getOptions()">
-      <input   type="button" value="Logout" class="btn btn-danger btn-sm glyphicon glyphicon-floppy-disk" ng-click="loginctrl.logout()"/> 
+      <button value="Logout" class="btn btn-danger btn-sm glyphicon glyphicon-log-out" ng-click="loginctrl.logout()"/></button>
 
       <section  id="subjects" >
         <h2>
-            <input  type="button" value="Edit" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="SubjectEdit = !SubjectEdit"/> Subjects
+            <button value="Edit" class="btn btn-success btn-sm glyphicon glyphicon-pencil" ng-click="SubjectEdit = !SubjectEdit"/></button> Subjects
         </h2>
         <div ng-show="SubjectEdit">
           <ul>
@@ -54,16 +54,16 @@
         <div ng-show="SubjectEdit">          
           <form>
             <input type='text' ng-model='optionctrl.subjList'/> Subjects<br/>
-            <input  type="button" value="Save" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="optionctrl.createSubjects();SubjectEdit = !SubjectEdit"/>
+            <button value="Save" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="optionctrl.createSubjects();SubjectEdit = !SubjectEdit"/></button>
             
-            <input  type="button" value="Delete" class="btn btn-danger  btn-sm glyphicon glyphicon-trash" ng-click="optionctrl.deleteSubjects();SubjectEdit = !SubjectEdit"/>
+            <button value="Delete" class="btn btn-danger  btn-sm glyphicon glyphicon-trash" ng-click="optionctrl.deleteSubjects();SubjectEdit = !SubjectEdit"/></button>
           </form>
         </div>        
       </section>
 
       <section  id="tables" >
         <h2>
-        <input  type="button" value="Edit" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="TableEdit = !TableEdit"/> Tables
+        <button value="Edit" class="btn btn-success btn-sm glyphicon glyphicon-pencil" ng-click="TableEdit = !TableEdit"/></button> Tables
         </h2>
         <div ng-show="TableEdit">
           <ul>
@@ -73,21 +73,21 @@
           </ul>          
           <form>
             <input type='text' ng-model='optionctrl.tableList'/> Tables<br/>
-            <input  type="button" value="Save" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="optionctrl.createTables();TableEdit = !TableEdit"/>
-            <input  type="button" value="Delete" class="btn btn-danger  btn-sm glyphicon glyphicon-trash" ng-click="optionctrl.deleteTables();edit = !edit"/>
+            <button value="Save" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="optionctrl.createTables();TableEdit = !TableEdit"/></button>
+            <button value="Delete" class="btn btn-danger  btn-sm glyphicon glyphicon-trash" ng-click="optionctrl.deleteTables();edit = !edit"/></button>
           </form>
         </div>
       </section>
       
       <section  id="users" >
         <h2>
-          <input  type="button" value="Edit" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="optionctrl.getUsers();UserEdit = !UserEdit"/> Users
+          <button value="Edit" class="btn btn-success btn-sm glyphicon glyphicon-pencil" ng-click="optionctrl.getUsers();UserEdit = !UserEdit"/></button> Users
         </h2>
-        <!-- <input  type="button" value="Display users" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="optionctrl.getUsers();UserEdit = !UserEdit"/> -->
+        <!-- <button value="Display users" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="optionctrl.getUsers();UserEdit = !UserEdit"/> -->
         <div ng-show="UserEdit" >
           <ul>
             <li ng-repeat="user in optionctrl.users">
-              <input  type="button" value="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash" ng-click="optionctrl.deleteUser(user.id);$parent.UserEdit = !$parent.UserEdit"/>
+              <button value="Delete" class="btn btn-danger btn-sm glyphicon glyphicon-trash" ng-click="optionctrl.deleteUser(user.id);$parent.UserEdit = !$parent.UserEdit"/></button>
                 {{user.name}}
             </li>
           </ul>         
@@ -95,35 +95,52 @@
             <input type='text' ng-model='optionctrl.username'/> Username<br/>
             <input type='password' ng-model='optionctrl.password'/> Password<br/>
             <input type='checkbox' ng-model='optionctrl.admin'/> Admin<br/>
-            <input  type="button" value="Save" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="optionctrl.createUsers();UserEdit = !UserEdit"/>
+            <button value="Save" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="optionctrl.createUsers();UserEdit = !UserEdit"/></button>
           </form>
         </div>
       </section>
 
       <section id="export" ng-controller="exportController as exportctrl">
         <h2>
-        <input  type="button" value="Edit" class="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" ng-click="ExportEdit = !ExportEdit"/> Export
+          <button value="Edit" class="btn btn-success btn-sm glyphicon glyphicon-pencil" ng-click="ExportEdit = !ExportEdit"/></button> Export
         </h2>
         <div ng-show="ExportEdit">
           <h3>
-            Export tutoring sessions as CSV {{exportctrl.email}}
+            Export sessions database as .csv file
           </h3>
 
-          <form>
-            <input type='text' ng-model='exportctrl.email'/> email<br/>
-            <input  type="button" value="Email" class="btn btn-danger  btn-sm glyphicon glyphicon-trash" ng-click="exportctrl.exportEmail(exportctrl.email);ExportEdit = !ExportEdit"/>
-            <input  type="button" value="Download" class="btn btn-danger  btn-sm glyphicon glyphicon-trash" ng-click="exportctrl.exportDownload();ExportEdit = !ExportEdit"/>          
-          </form>
+            <input type='text' ng-model='exportctrl.email'/> Email<br/>
+
+            <button value="Email"    class="btn btn-danger  btn-sm glyphicon glyphicon-envelope" ng-click="exportctrl.exportEmail(exportctrl.email);ExportEdit = !ExportEdit"/></button>
+            <button value="Download" class="btn btn-danger  btn-sm glyphicon glyphicon-download" ng-click="exportctrl.exportDownload();ExportEdit = !ExportEdit"/></button>          
+            <!-- <button value="test"     class="btn btn-warning btn-sm glyphicon glyphicon-trash" ng-click="exportctrl.testing();ExportEdit = !ExportEdit"/>           -->
+        
+            
+            <br/>
+            <h3>Broadcast message</h3>
+            Enter message: <input type="text" id="inputMessage"/> 
+            <button id="sendMessage" class="btn btn-success btn-sm glyphicon glyphicon-ok"/></button>
+            <!-- <input  id="sendMessage" type="button" value="send" class="btn btn-success  btn-sm glyphicon glyphicon-trash" ng-click="exportctrl.sendMessage()"/>      -->
+          
         </div>
 
       </section>
-      <section>
-        
-      <br/>Enter message: <input type="text" id="inputMessage"/>
-      <button id="sendMessage">Send</button>
-      </section>
     </main>
     </div>
+    <script src="./bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.2.7/angular-local-storage.min.js"></script> 
+    <script type="text/javascript" src="./js/socket.io.js"></script>
+    <script>
+    var socket = io();
+    $('#sendMessage').on('click', function(e) {
+      console.log($('#inputMessage').val());
+      e.preventDefault();
+      socket.emit('newMessage', $('#inputMessage').val());
+    });
+
+    </script>
+  </body>
+</html>
 <!-- 
 
 
@@ -384,18 +401,3 @@
   });
   </script> -->
 
-    <script src="./bundle.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-local-storage/0.2.7/angular-local-storage.min.js"></script> 
-    <script type="text/javascript" src="./js/socket.io.js"></script>
-    <script>
-    // Send message to clients
-    var socket = io();
-    $('#sendMessage').on('click', function(e) {
-      console.log($('#inputMessage').val());
-      e.preventDefault();
-      socket.emit('newMessage', $('#inputMessage').val());
-    });
-
-    </script>
-  </body>
-</html>

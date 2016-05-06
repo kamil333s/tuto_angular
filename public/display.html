@@ -12,17 +12,23 @@
 <meta http-equiv="Content-Language" content="en">
 <style media="screen">
   nav li { display: inline; }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 </style>
+<title>Tutor Queue- Current Queue</title>
 </head>
 <body ng-app="tutorApp">
   <main>
-    <nav>
+    <!-- <nav>
       <li><a href="index.html">Request Help</a></li>
       <li><a href="display.html">Queue</a></li>
       <li><a href="admin.html">Admin</a></li>
       <li><a href="login.html">Login</a></li>
-    </nav>
-  <section id="displayQ">
+    </nav> -->
+  <section id="displayQ" ng-cloak>
     <section id="Queue" ng-controller="sessionsController as sessionctrl" ng-init="sessionctrl.getSessions()">
       <h3 id="message">
         
@@ -31,7 +37,7 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <td colspan=5>Tutor Queue</td>
+                <th colspan=5>Current Queue</th>
               </tr>
               <tr>
                 <th>#</th>
@@ -68,7 +74,7 @@
       socket.on('UpdateQ', function(msg){
         location.reload();
       });
-      socket.on('newMessage', function(msg){
+      socket.on('bark', function(msg){
         $("#message").text(msg);
       });
     </script>
