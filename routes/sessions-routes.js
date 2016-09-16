@@ -10,7 +10,6 @@ module.exports = (router, models) => {
     .get((req, res) => {
       // Displays current queue
       Session.find({timeOut:null}, (err, sessions) => {
-
         if (err) {
           res.json({error: err});
         }// if
@@ -49,11 +48,11 @@ module.exports = (router, models) => {
         if (err) {
           res.json(err.toString());
         } else {
-
           res.json({
             message: 'Updated session',
             data: session
-          });
+          });          
+          req.io.sockets.emit('UpdateQ');
         }
       });
     })
@@ -67,12 +66,10 @@ module.exports = (router, models) => {
           res.json({'message': 'Session removed'});
           req.io.sockets.emit('UpdateQ');
           console.log('emit DeletedSession!');
-          req.io.sockets.emit('DeletedSession');
-           
+          req.io.sockets.emit('DeletedSession');           
         });// remove
       });// findById
     });
-
 
   router.route('/subjects')
     .get((req, res) => {

@@ -229,7 +229,7 @@ app.controller('optionsController', ['$http', 'myFactory','localStorageService',
 			);// then
 	};
 
-	}
+	// }
 
 	// *****************TABLES*******************
 
@@ -414,8 +414,29 @@ app.controller('sessionsController', ['$http',function($http) {
 	};
 
 
+    vm.completeSession = function(sessionID) {
+        console.log("Put:" + sessionID);
+        if (!!sessionID) {
+            $http({
+                method:'PUT',
+                url: URL + '/sessions/' + sessionID,
+                headers: {
+                    'content-type':'application/json'
+                }
+            }).then(function success(res) {
+                console.dir("res:" + res);
+                vm.currSessionID = '';
+                vm.message = res.data.message;  
+            }, function error(res) {
+                alert('There was an error');
+                console.log(res);
+                }// error
+            );// then
+        };// if
+    };// putSession
+
 	vm.deleteSession = function(sessionID) {
-		console.log(sessionID);
+		console.log("Delete:" + sessionID);
 		if (!!sessionID) {
 			$http({
 				method:'DELETE',
@@ -424,7 +445,7 @@ app.controller('sessionsController', ['$http',function($http) {
 					'content-type':'application/json'
 				}
 			}).then(function success(res) {
-				console.dir(res);
+				console.dir("res:" + res);
 				vm.currSessionID = '';
 				vm.message = res.data.message;	
 			}, function error(res) {

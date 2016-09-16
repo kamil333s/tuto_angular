@@ -55,6 +55,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(2);
+	// require('socket.io');
 
 	var app = angular.module('tutorApp',['LocalStorageModule']);
 	var URL = 'http://localhost:3000';
@@ -284,6 +285,8 @@
 				);// then
 		};
 
+		// }
+
 		// *****************TABLES*******************
 
 
@@ -428,7 +431,6 @@
 					}// error
 				);// then
 		};
-
 	}]);// controller
 
 
@@ -436,9 +438,9 @@
 		var vm = this;
 		vm.header = 'Queue';
 		vm.sessions = [{
-			subject:'subjectTest4',
-			table:'table1',
-			timeIn:'time',
+			subject:'',
+			table:'',
+			timeIn:'',
 			id:''
 		}];
 		vm.mysubject = '';
@@ -468,8 +470,29 @@
 		};
 
 
+	    vm.completeSession = function(sessionID) {
+	        console.log("Put:" + sessionID);
+	        if (!!sessionID) {
+	            $http({
+	                method:'PUT',
+	                url: URL + '/sessions/' + sessionID,
+	                headers: {
+	                    'content-type':'application/json'
+	                }
+	            }).then(function success(res) {
+	                console.dir("res:" + res);
+	                vm.currSessionID = '';
+	                vm.message = res.data.message;  
+	            }, function error(res) {
+	                alert('There was an error');
+	                console.log(res);
+	                }// error
+	            );// then
+	        };// if
+	    };// putSession
+
 		vm.deleteSession = function(sessionID) {
-			console.log(sessionID);
+			console.log("Delete:" + sessionID);
 			if (!!sessionID) {
 				$http({
 					method:'DELETE',
@@ -478,7 +501,7 @@
 						'content-type':'application/json'
 					}
 				}).then(function success(res) {
-					console.dir(res);
+					console.dir("res:" + res);
 					vm.currSessionID = '';
 					vm.message = res.data.message;	
 				}, function error(res) {
@@ -537,10 +560,8 @@
 	}]);
 
 	app.controller('exportController', ['$http', 'myFactory', function($http, myFactory) {
-		console.log("export called");
 		var vm = this;
 	    vm.email = '';
-
 
 	    vm.exportEmail = function(email){
 	    	console.log("export called");
@@ -588,20 +609,16 @@
 					}// error
 				);// then
 
-	    }
-	  	vm.logout = function(){
-			myFactory.clearToken();
-		    vm.username = '';
-		    vm.password = '';
-	  		vm.loggedBool = false;
-	  	}
+	    };
+	}]);
 
-	  	vm.loggedIn = function(){
-	  		vm.loggedBool= true;
-	  	}
-	  	vm.loggedOut = function(){
-	  		vm.loggedBool = false;
-	  	}
+	app.controller('messageController', ['$http', 'myFactory', function($http, myFactory) {
+		var msg = this;
+	    msg.test = 'test';
+
+	    msg.test = function(){
+	    	console.log('HERE!');
+	    };
 	}]);
 
 /***/ },

@@ -19,11 +19,9 @@ var io = require('socket.io').listen(app.listen(3000, () => {
 io.sockets.on('connection', function (socket) {
     console.log('client connect');
     socket.on('echo', function (data) {
-      console.log('recieved echo!!');
       io.sockets.emit('newSession', data);
     });
     socket.on('newMessage', function (data) {
-      // console.log('bark!');
       io.sockets.emit('bark', data);
     });
 });

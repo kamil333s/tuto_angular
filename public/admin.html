@@ -119,8 +119,12 @@
             <br/>
             <h3>Broadcast message</h3>
             Enter message: <input type="text" id="inputMessage"/> 
-            <button id="sendMessage" class="btn btn-success btn-sm glyphicon glyphicon-ok"/></button>
-            <!-- <input  id="sendMessage" type="button" value="send" class="btn btn-success  btn-sm glyphicon glyphicon-trash" ng-click="exportctrl.sendMessage()"/>      -->
+            <!-- <button id="sendMessage" class="btn btn-success btn-sm glyphicon glyphicon-ok"/></button> -->
+            <input  id="sendMessage" type="button" value="Send" class="btn btn-success  btn-sm glyphicon glyphicon-trash" ng-click="exportctrl.sendMessage()"/> 
+
+            <h3>Archive Sessions</h3>
+            Archive all current sessions
+            <input  id="archiveSessions" type="button" value="Archive" class="btn btn-success  btn-sm glyphicon glyphicon-pencil" ng-click="exportctrl.archiveSessions()"/>    
           
         </div>
 

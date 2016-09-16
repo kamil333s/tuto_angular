@@ -9,6 +9,7 @@ module.exports = (router, models) => {
   let Subject = models.Subject;
   let User = models.User;
   let Archive = models.Archive;
+
   router.route('/')
     .get((req, res) => {
       // displays all Subjects and Tables
@@ -36,7 +37,6 @@ module.exports = (router, models) => {
         res.json(sessions);
       });// find
     });
-
 
 
   router.route('/users')
